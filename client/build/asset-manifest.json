@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/bf-mern-challenge/static/css/main.46082976.css",
+    "main.js": "/bf-mern-challenge/static/js/main.40af5c7a.js",
+    "static/media/storyImg.jpeg": "/bf-mern-challenge/static/media/storyImg.ae1691187c402dc4d200.jpeg",
+    "index.html": "/bf-mern-challenge/index.html",
+    "main.46082976.css.map": "/bf-mern-challenge/static/css/main.46082976.css.map",
+    "main.40af5c7a.js.map": "/bf-mern-challenge/static/js/main.40af5c7a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.46082976.css",
+    "static/js/main.40af5c7a.js"
+  ]
+}

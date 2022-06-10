@@ -23,16 +23,19 @@ export default makeStyles({
     posititon: 'relative'
   },
   overlay: {
-    position: 'absolute',
     top: '20px',
     left: '20px',
-    color: 'white',
+    color: 'black',
   },
   overlay2: {
-    position: 'absolute',
     top: '20px',
     right: '20px',
-    color: 'white'
+  },
+  overlayContainer: {
+    paddingLeft: '10px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   grid: {
     display: 'flex'

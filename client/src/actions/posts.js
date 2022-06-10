@@ -9,7 +9,7 @@ export const getPosts = () => async (dispatch) => {
       payload: data
     });
   }catch(error){
-    console.log(error.message)
+    console.log("getPosts->failed:",error)
   };
 }
 
@@ -21,6 +21,32 @@ export const createPost = (post) => async (dispatch) => {
       payload: data
     });
   }catch(error){
-    console.log(error)
+    console.log("createPost->failed:", error)
   };
 } 
+
+export const updatePost =(id, post)=> async (dispatch)=> {
+  try{
+    //{data} = await updated response
+    const { data } = await api.updatePost(id, post)
+    dispatch({
+      type: 'UPDATE',
+      payload: data
+    })
+  }catch(error){
+    console.log("updatePost->failed: ",error)
+  }
+}
+
+
+export const deletePost =(id)=> async (dispatch)=> {
+  try{
+    await api.deletePost(id)
+    dispatch({
+      type: 'DELETE',
+      payload: id
+    })
+  }catch(error){
+    console.log("deletePost->failed: ",error)
+  }
+}

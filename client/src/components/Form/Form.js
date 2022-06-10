@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useStyles from './styles';
 import { TextField, Button, Typography, Paper} from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, updatePost } from '../../actions/posts';
 
 
 
-export default function Form(){
+export default function Form({ currentId, setCurrentId }){
+  const editorPost = useSelector((state) => currentId ? state.posts.find((p)=> p._id === currentId) : null );
   const dispatch = useDispatch();
   const [postData, setPostData] = useState({
     creator: '',
@@ -16,13 +17,31 @@ export default function Form(){
     tags: '',
     selectedFile: ''
   });
-
   const classes = useStyles();
+
+  useEffect(()=>{
+    if(editorPost) setPostData(editorPost)
+  }, [editorPost]);
+
   const handleSubmit = (e) =>{
-    e.preventDefault()
-    dispatch(createPost(postData))
+    e.preventDefault();
+    if(currentId){ 
+      dispatch(updatePost(currentId, postData))
+    }else{
+      dispatch(createPost(postData))
+    }
+    handleClear()
   };
-  const handleClear = () =>{};
+  const handleClear = () =>{
+    setCurrentId(null);
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: ''
+    })
+  };
   return (
     <Paper className={classes.paper}>
       <form autoComplete="off" 
@@ -30,7 +49,7 @@ export default function Form(){
         className={`${classes.root} ${classes.form}`} 
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">
+        <Typography variant="h6"> {currentId ? 'Editing' : 'Create'} Story</Typography>
           <TextField name="creator" variant="outlined" label="Creator" fullWidth value={postData.creator}
             onChange={ (e) => setPostData({ ...postData, creator: e.target.value})}
           />
@@ -41,7 +60,8 @@ export default function Form(){
             onChange={ (e) => setPostData({ ...postData, message: e.target.value})}
           />
           <TextField name="tags" variant="outlined" label="Tags" fullWidth value={postData.tags}
-            onChange={ (e) => setPostData({ ...postData, tags: e.target.value})}
+            onChange={ (e) => setPostData({ ...postData, tags: e.target.value.split(',')})}
+            title="Hint: Separate Hashtags with comma(eg. dance, read, sing)"
           />
           <div className={classes.fileInput}>
             <FileBase
@@ -58,7 +78,6 @@ export default function Form(){
                 onClick={handleClear} fullWidth> Clear
               </Button>
           </div>
-        </Typography>
       </form>
     </Paper>
   );

@@ -2,20 +2,32 @@ import React, { useEffect, useState } from "react";
 import userImg from "../../images/storyImg.jpeg";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import useStyles from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../constants/actionTypes";
 
 function Navbar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user.profile"))
   );
   console.log("user major==> ", user);
-  useEffect(() => {
+  /*useEffect(() => {
     const token = user?.encodedToken;
 
     //JWT ...
     setUser(JSON.parse(localStorage.getItem("user.profile")));
-  }, []);
+  }, []);*/
+
+  const handleLogout = () => {
+    dispatch({ type: LOGOUT });
+    navigate("/bf-mern-challenge");
+    setUser(null);
+  };
+
   return (
     <AppBar position="static" color="inherit" className={classes.appBar}>
       <div className={classes.brandContainer}>
@@ -48,7 +60,7 @@ function Navbar() {
               variant="contained"
               className={classes.logout}
               color="secondary"
-              onClick={() => {}}
+              onClick={handleLogout}
             >
               Logout
             </Button>

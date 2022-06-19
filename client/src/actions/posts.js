@@ -16,7 +16,7 @@ export const getPosts = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("getPosts->failed:", error);
+    console.log("getPostsAction->failed:", error);
   }
 };
 
@@ -28,7 +28,7 @@ export const createPost = (post) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("createPost->failed:", error);
+    console.log("createPostAction->failed:", error);
   }
 };
 
@@ -41,7 +41,7 @@ export const updatePost = (id, post) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("updatePost->failed: ", error);
+    console.log("updatePostAction->failed: ", error);
   }
 };
 
@@ -53,7 +53,7 @@ export const deletePost = (id) => async (dispatch) => {
       payload: id,
     });
   } catch (error) {
-    console.log("deletePost->failed: ", error);
+    console.log("deletePostAction->failed: ", error);
   }
 };
 

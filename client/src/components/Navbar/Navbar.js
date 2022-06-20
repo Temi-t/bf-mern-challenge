@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import userImg from "../../images/storyImg.jpeg";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import useStyles from "./styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../constants/actionTypes";
 
@@ -10,17 +10,19 @@ function Navbar() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user.profile"))
   );
   console.log("user major==> ", user);
-  /*useEffect(() => {
+  useEffect(() => {
     const token = user?.encodedToken;
 
     //JWT ...
     setUser(JSON.parse(localStorage.getItem("user.profile")));
-  }, []);*/
+    //perform update: help display avatar and logout on arrival from auth page
+  }, [location]);
 
   const handleLogout = () => {
     dispatch({ type: LOGOUT });

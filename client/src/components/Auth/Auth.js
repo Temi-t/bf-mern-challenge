@@ -9,7 +9,6 @@ import {
   Grid,
   Typography,
   Container,
-  TextField,
 } from "@material-ui/core";
 import { GoogleLogin } from "@react-oauth/google";
 //import { googleLogout } from '@react-oauth/google';
@@ -18,20 +17,50 @@ import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { AUTH } from "../../constants/actionTypes";
 import { useNavigate } from "react-router-dom";
+import { signup, signin } from "../../actions/authActions";
 //import { GoogleLogin } from "react-google-login";
 //import Icon from "./icon";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 function Auth() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialState);
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //const state = null;
   //useEffect(() => {}, []);
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("formData===> ", formData);
+    if (isSignup) {
+      dispatch(signup(formData, navigate));
+    } else {
+      dispatch(signin(formData, navigate));
+    }
+  };
 
-  const handleInputChange = () => {};
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    //handleSubmit();
+  };
+  /*const handleInputChange = (e) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.name]: e.target.value,
+    }));
+    //handleSubmit();
+  }; */
 
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
@@ -43,13 +72,12 @@ function Auth() {
   const googleSuccess = async (credentialRes) => {
     const encodedToken = credentialRes.credential;
     const userObj = jwt_decode(encodedToken);
-    /* const result = credentialRes.profileObj;
-    const token = credentialRes.tokenId;*/
     try {
       dispatch({
         type: AUTH,
         payload: { userObj, encodedToken },
       });
+      //onSuccess, navigate to home screen
       navigate("/bf-mern-challenge");
     } catch (error) {
       console.log(error);
@@ -76,16 +104,16 @@ function Auth() {
                 <Input
                   name="firstName"
                   placeholder="First Name"
-                  label="first Name"
-                  handleChange={handleInputChange}
+                  label="First name"
+                  handleInputChange={handleInputChange}
                   autoFocus
                   half
                 />
                 <Input
                   name="lastName"
                   placeholder="Last Name"
-                  label="last Name"
-                  handleChange={handleInputChange}
+                  label="Last name"
+                  handleInputChange={handleInputChange}
                   half
                 />
               </>
@@ -94,14 +122,14 @@ function Auth() {
               name="email"
               type="email"
               label="Email Address"
-              handleChange={handleInputChange}
+              handleInputChange={handleInputChange}
             />
             <Input
               name="password"
               label="Password"
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
-              handleChange={handleInputChange}
+              handleInputChange={handleInputChange}
             />
             {/*if signing up: show confirm password*/}
             {isSignup && (
@@ -109,7 +137,7 @@ function Auth() {
                 name="confirmPassword"
                 label="Repeat Password"
                 type="password"
-                handleChange={handleInputChange}
+                handleInputChange={handleInputChange}
               />
             )}
           </Grid>

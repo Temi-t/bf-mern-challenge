@@ -12,7 +12,8 @@ function authReducer(state = initialState, action) {
       );
       return { ...state, authData: action.payload };
     case LOGOUT:
-      return state;
+      localStorage.removeItem("user.profile");
+      return { ...state, authData: null };
     default:
       return state;
   }

@@ -36,12 +36,13 @@ function Auth() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //useEffect(() => {}, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("formData===> ", formData);
     if (isSignup) {
       dispatch(signup(formData, navigate));
+      console.log("formData dispatched here", formData);
     } else {
       dispatch(signin(formData, navigate));
     }
@@ -78,7 +79,8 @@ function Auth() {
         payload: { userObj, encodedToken },
       });
       //onSuccess, navigate to home screen
-      navigate("/bf-mern-challenge");
+      navigate("/");
+      //navigate("/bf-mern-challenge");
     } catch (error) {
       console.log(error);
     }

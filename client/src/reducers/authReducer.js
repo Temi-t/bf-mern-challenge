@@ -8,9 +8,9 @@ function authReducer(state = initialState, action) {
       console.log("AUTH => ", action.payload);
       localStorage.setItem(
         "user.profile",
-        JSON.stringify({ ...action.payload })
+        JSON.stringify({ ...action?.payload })
       );
-      return { ...state, authData: action.payload };
+      return { ...state, authData: action?.payload };
     case LOGOUT:
       localStorage.removeItem("user.profile");
       return { ...state, authData: null };

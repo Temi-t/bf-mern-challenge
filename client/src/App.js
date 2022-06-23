@@ -11,7 +11,7 @@ export default function App() {
       <Container maxWidth="lg">
         <Navbar />
         <Routes>
-          <Route path="/bf-mern-challenge" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
         </Routes>
       </Container>

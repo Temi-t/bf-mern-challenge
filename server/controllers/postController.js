@@ -48,12 +48,29 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   const { id } = req.params;
+  //req is populated with userId coming from authMiddleware in /routes/posts
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
+  //check if we have the have the post that the user wants to like
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No post with that id");
+  //get actual post
   const post = await PostMessage.findById(id);
+  console.log("Does 'like' or'likeCount' exist here ===> ", post);
+  //check if the userId for liking post already exists or if the user has already liked this post before now
+  //********* 1:53
+  const index = post.likes.findIndex((id) => id === String(req.userId));
+  if (index === -1) {
+    //like the post if created index variable doesn't exist
+    post.likes.push(req.userId);
+  } else {
+    //dislike the post since this "id" was found to have liked the post before
+    post.likes = post.likes.filter((id) => id !== String(req.userId));
+  }
+  //update the selected Post.
   const updatedPost = await PostMessage.findByIdAndUpdate(
     id,
-    { likeCount: post.likeCount + 1 },
+    //{ likeCount: post.likeCount + 1 },
+    post,
     { new: true }
   );
   res.json(updatedPost);

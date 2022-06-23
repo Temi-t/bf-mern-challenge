@@ -6,7 +6,6 @@
   "Comments": {
     "_comment1": "// homepage => https://temi-t.github.io/bf-mern-challenge"
   },
-  "homepage": "https://temi-t.github.io/bf-mern-challenge",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",

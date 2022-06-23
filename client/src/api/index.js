@@ -1,10 +1,16 @@
 import axios from "axios";
 
+//axios instance
+const API = axios.create({ baseState: "http://localhost:5000" });
 //const url = "https://bf-mern.herokuapp.com/posts";
-const url = "http://localhost:5000/posts";
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
+//const url = "http://localhost:5000/posts";
+export const fetchPosts = () => API.get("/posts");
+export const createPost = (newPost) => API.post("/posts", newPost);
 export const updatePost = (id, updatedPost) =>
-  axios.patch(`${url}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
-export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
+  API.patch(`/posts/${id}`, updatedPost);
+export const deletePost = (id) => API.delete(`/posts/${id}`);
+export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
+
+//routes for signin and signup
+export const signInUser = (formData) => API.post("/users/signin", formData);
+export const signUpUser = (formData) => API.post("/users/signup", formData);

@@ -29,7 +29,9 @@ export const signinController = async (req, res) => {
     res.status(200).json({ result: existingUser, token });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Aww snap! Something went wrong." });
+    res
+      .status(500)
+      .json({ message: "Aww snap! Something went wrong. Sign in failed" });
   }
 };
 
@@ -46,19 +48,24 @@ export const signupController = async (req, res) => {
     //if user doesn't exist and password is valid, hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
     //create a new user
-    const userResult = await UserModel.create({
-      name: `${firstName}, ${lastName}`,
+    const result = await UserModel.create({
+      name: `${firstName}  ${lastName}`,
       email,
       password: hashedPassword,
     });
     //create token
     const token = jwt.sign(
-      { email: userResult.email, id: result._id },
+      { email: result.email, id: result._id },
       "secret_test_key",
       { expiresIn: "1h" }
     );
-    res.status(200).json({ userResult, token });
+    console.log("result===>", result, "token===>", token);
+    //result = {...result, token}
+    res.status(200).json({ result, token });
   } catch (error) {
-    res.status(500).json({ message: "Aww snap! Something went wrong." });
+    console.log("err=>", error);
+    res
+      .status(500)
+      .json({ message: "Aww snap! Something went wrong. Signup failed!" });
   }
 };

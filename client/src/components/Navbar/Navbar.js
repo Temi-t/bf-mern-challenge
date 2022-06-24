@@ -58,10 +58,7 @@ function Navbar() {
               className={classes.purple}
               alt={user.userObj?.given_name || user.result.name}
               src={user.userObj?.picture || user.result.picture}
-              //src={userPicture}
-              //alt={userName}
             >
-              {/*user.name.charAt(0)*/}
               {user.result.name.charAt(0).toUpperCase ||
                 user.userObj.given_name.charAt(0).toUpperCase}
             </Avatar>

@@ -78,6 +78,7 @@ export default function Form({ currentId, setCurrentId }) {
           label="Message"
           fullWidth
           value={postData.message}
+          spellCheck="true"
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
           }

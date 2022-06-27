@@ -32,7 +32,7 @@ export default function Post({ post, setCurrentId }) {
 
       <div className={classes.overlayContainer}>
         <div className={classes.overlay}>
-          <Typography variant="h5">{post.creator}</Typography>
+          <Typography variant="h5">{post.name}</Typography>
           <Typography variant="body2" color="textSecondary">
             {moment(post.createdAt).fromNow()}
           </Typography>

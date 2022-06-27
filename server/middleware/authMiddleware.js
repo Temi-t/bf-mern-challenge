@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 const authMiddleware = (req, res, next) => {
   //get the token to be verified before users can perform actions like deleting posts, liking posts etc.
   try {
+    console.log("from AUTHmiddleware: ", req.headers);
     const token = req.headers.authorization.split(" ")[1];
     //since googleToken is > 500, the token < 500 is custom
     const isCustomAuth = token.length < 500;

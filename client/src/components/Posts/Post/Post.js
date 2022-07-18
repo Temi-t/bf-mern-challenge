@@ -22,6 +22,10 @@ export default function Post({ post, setCurrentId }) {
     height: "3rem",
     overflow: "auto",
   };
+  const user = JSON.parse(localStorage.getItem("user.profile"));
+  //Like Subcomponent
+  const Likes = () => {};
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -67,8 +71,9 @@ export default function Post({ post, setCurrentId }) {
           color="primary"
           onClick={() => dispatch(likePost(post._id))}
         >
-          <ThumbUpAltIcon fontSize="small" />
-          &nbsp; Like &nbsp; {post.likeCount}
+          {/* <ThumbUpAltIcon fontSize="small" />
+          &nbsp; Like &nbsp; {post.likeCount} */}
+          <Likes />
         </Button>
         <Button
           size="small"

@@ -40,7 +40,7 @@ export default function Form({ currentId, setCurrentId }) {
     return (
       <Paper className="classes.paper">
         <Typography variant="h6" align="center">
-          Please Sign in create or like posts!🫣
+          Please Sign in to create or like posts!🫣
         </Typography>
       </Paper>
     );

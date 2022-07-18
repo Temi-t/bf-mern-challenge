@@ -11,13 +11,14 @@ export default function Form({ currentId, setCurrentId }) {
   );
   const dispatch = useDispatch();
   const [postData, setPostData] = useState({
-    creator: "",
+    //creator: "",
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
   const classes = useStyles();
+  const user = JSON.parse(localStorage.getItem("user.profile"));
 
   useEffect(() => {
     if (editorPost) setPostData(editorPost);
@@ -26,16 +27,29 @@ export default function Form({ currentId, setCurrentId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
     handleClear();
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className="classes.paper">
+        <Typography variant="h6" align="center">
+          Please Sign in to create or like posts!🫣
+        </Typography>
+      </Paper>
+    );
+  }
+
   const handleClear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
+      //creator: "",
       title: "",
       message: "",
       tags: "",
@@ -54,7 +68,7 @@ export default function Form({ currentId, setCurrentId }) {
           {" "}
           {currentId ? "Editing" : "Create"} Story
         </Typography>
-        <TextField
+        {/*<TextField
           name="creator"
           variant="outlined"
           label="Creator"
@@ -63,7 +77,7 @@ export default function Form({ currentId, setCurrentId }) {
           onChange={(e) =>
             setPostData({ ...postData, creator: e.target.value })
           }
-        />
+        />*/}
         <TextField
           name="title"
           variant="outlined"

@@ -22,6 +22,10 @@ export default function Post({ post, setCurrentId }) {
     height: "3rem",
     overflow: "auto",
   };
+  const user = JSON.parse(localStorage.getItem("user.profile"));
+  //Like Subcomponent
+  const Likes = () => {};
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -32,7 +36,7 @@ export default function Post({ post, setCurrentId }) {
 
       <div className={classes.overlayContainer}>
         <div className={classes.overlay}>
-          <Typography variant="h5">{post.creator}</Typography>
+          <Typography variant="h5">{post.name}</Typography>
           <Typography variant="body2" color="textSecondary">
             {moment(post.createdAt).fromNow()}
           </Typography>
@@ -67,8 +71,9 @@ export default function Post({ post, setCurrentId }) {
           color="primary"
           onClick={() => dispatch(likePost(post._id))}
         >
-          <ThumbUpAltIcon fontSize="small" />
-          &nbsp; Like &nbsp; {post.likeCount}
+          {/* <ThumbUpAltIcon fontSize="small" />
+          &nbsp; Like &nbsp; {post.likeCount} */}
+          <Likes />
         </Button>
         <Button
           size="small"
